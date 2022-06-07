@@ -7,13 +7,14 @@ import com.bumptech.glide.Glide
 import com.ikmal93.androidmycomponent.databinding.BannerImageSliderItemBinding
 
 class BannerSliderAdapter(
-    private val bannerListItem: MutableList<BannerModel>
+    private val bannerListItem: MutableList<BannerModel>,
+    private val onItemClick: (BannerModel) -> Unit
 ) : RecyclerView.Adapter<BannerSliderAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = BannerImageSliderItemBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+        return ViewHolder(binding, onItemClick)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -25,7 +26,8 @@ class BannerSliderAdapter(
     }
 
     class ViewHolder(
-        private val binding: BannerImageSliderItemBinding
+        private val binding: BannerImageSliderItemBinding,
+        private val onItemClick: (BannerModel) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(bannerModel: BannerModel) {
             binding.apply {
@@ -33,6 +35,9 @@ class BannerSliderAdapter(
                     .load(bannerModel.bannerImageUrl)
                     .into(ivImage)
                 tvTitle.text = bannerModel.bannerTitle
+                root.setOnClickListener {
+                    onItemClick(bannerModel)
+                }
             }
         }
     }

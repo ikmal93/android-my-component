@@ -3,6 +3,7 @@ package com.ikmal93.androidmycomponent.component.banner
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.LinearLayoutCompat
@@ -56,7 +57,13 @@ class BannerComponentActivity : AppCompatActivity() {
             )
         )
         binding.apply {
-            bannerSliderAdapter = BannerSliderAdapter(bannerListItem)
+            bannerSliderAdapter = BannerSliderAdapter(bannerListItem) {
+                Toast.makeText(
+                    this@BannerComponentActivity,
+                    "${it.bannerTitle}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
             vpImageSlider.adapter = bannerSliderAdapter
             vpImageSlider.currentItem = 0
             addBottomDots(llDots, bannerSliderAdapter.itemCount, 0)
